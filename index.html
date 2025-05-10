@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shroomtop420® QR Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #0f0f1b;
+      font-family: 'Courier New', monospace;
+    }
+    .glow {
+      box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffc3;
+    }
+    .mushroom-mask {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="text-white flex items-center justify-center min-h-screen p-4">
+  <div class="bg-gray-900 rounded-2xl p-6 glow max-w-md w-full relative">
+    <div class="flex justify-center mb-4">
+      <svg class="w-12 h-12 text-purple-400" fill="currentColor" viewBox="0 0 64 64">
+        <path d="M32 4C18 4 4 18 4 32s14 28 28 28 28-14 28-28S46 4 32 4zm0 6c7 0 14 4 18 10H14c4-6 11-10 18-10zm0 40c-4 0-8-4-8-8h16c0 4-4 8-8 8z"/>
+      </svg>
+    </div>
+    <h1 class="text-2xl text-center font-bold text-green-400 mb-4">Shroomtop420® QR Code</h1>
+    <label class="block text-pink-300 mb-2">Enter text or URL:</label>
+    <input id="qr-input" type="text" class="w-full bg-gray-800 text-white p-2 rounded border border-gray-700 mb-4" placeholder="https://shroomtop420.com" />
+    <div id="qr-code" class="relative flex justify-center mb-4"></div>
+    <div class="flex justify-center gap-4">
+      <button id="download-png" class="bg-green-600 hover:bg-green-500 text-black px-4 py-2 rounded">Download PNG</button>
+      <button id="download-svg" class="bg-purple-500 hover:bg-purple-400 text-black px-4 py-2 rounded">Download SVG</button>
+    </div>
+  </div>
+
+  <!-- Embedded QR Code Styling Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+  <script type="module">
+    const qr = new QRCodeStyling({
+      width: 300,
+      height: 300,
+      data: "https://shroomtop420.com",
+      image: "", // You could use a logo here
+      dotsOptions: {
+        color: "#a855f7",
+        type: "dots"
+      },
+      cornersSquareOptions: {
+        type: "extra-rounded",
+        color: "#00ffcc"
+      },
+      cornersDotOptions: {
+        color: "#00ffcc"
+      },
+      backgroundOptions: {
+        color: "transparent"
+      },
+      imageOptions: {
+        crossOrigin: "anonymous",
+        margin: 0
+      }
+    });
+
+    const qrCodeContainer = document.getElementById("qr-code");
+    qr.append(qrCodeContainer);
+
+    document.getElementById("qr-input").addEventListener("input", (e) => {
+      qr.update({
+        data: e.target.value || "https://shroomtop420.com"
+      });
+    });
+
+    document.getElementById("download-png").addEventListener("click", () => qr.download({ extension: "png" }));
+    document.getElementById("download-svg").addEventListener("click", () => qr.download({ extension: "svg" }));
+  </script>
+</body>
+</html>
